@@ -1,0 +1,65 @@
+            Database for *.FITS filenames and metadata
+
+1. Introduction
+
+a. Have you ever had to find an image that was taken in 2019 in Sutherland, or all your images of the Pleiades or  …
+b. FITS_DB was created as a tool to scan *.fits files with their headers and save the filename and the header data in ‘n database. 
+
+2. Specifications
+
+a. FITS_file_meta_search currently only tested on a Windows system.
+b. Written in Python 3.12 and complied to an .exe file.
+c. Only *.fts, *.fit or *.fits files with a valid FITS header will be scanned.
+d. A SQLite database (metadata.db) is used as database.
+e. The log and other files are stored in C:/users/”username”/AppData/Local/FITS_DB
+
+3. Assumptions
+
+a. All your images are in one root folder or at least in one drive. (But scanning the whole drive may take very long)
+b. Your metadata of the images are updated with your specific info.
+Note: All the data and info are in the images. The database is just an image of the image’s data, excluding the image itself. If you lose the database, you can just run the "Create" again.
+
+3. Process
+
+     Step 1: Select a folder where to store the database.
+     Step 2: Select a folder (sub folders are automatically added) which contains the images to scan.
+     Step 3: Create the database. 
+             Please note that a new database and logfile are created with each “Create” and the old one is deleted.
+     Step 4: View the database created. Filters can be applied to the three fields (Filename, Header and Value of the header). If a more complex search needs to done - any SQLite file browser can be used to read the database. DB Browser (SQLite) is a popular choice.
+
+The program tries to correct errors in the metadata, but check the log file if experiencing problems.
+
+4. Editing FITS headers
+
+Most astronomical images software like SIRIL, ASTP and Pixinsight can read and/or modify the header data. I also found a small FITS viewer AvisFV 3.0 for this purpose. Another option is F4W2HDU (the stand-alone package).
+
+5. Why FITS_file_meta_search?
+
+There is a need for: 
+“Organizing: The solution should centralize and organize digital assets in a single, easy-to-access library where they can be easily found by everyone that needs the images.
+
+Searching: The solutions should ensure digital assets are easily discoverable through advanced search capabilities, such as keywords, attributes, categories and other metadata. The time saved retrieving assets from using an image management system really adds up!” (https://www.mediavalet.com/blog/image-management#file)
+
+For image management there are a number of options, from highly specialized Digital Asset Management (DAM) Software for companies to opensource ones like digiKam. Software like Adobe Lightroom, Apple photos and Google photos comes to mind. But for the amateur they are either too expensive, too complex or, mostly, they cannot manage FITS files.
+
+Thus FITS_DB as a simple file organizer and searcher was born.
+
+6. FITS File format (https://en.wikipedia.org/wiki/FITS)
+
+Flexible Image Transport System (FITS) is an open standard defining a digital file format useful for storage, transmission and processing of data: formatted as multi-dimensional arrays (for example a 2D image), or tables.[3] FITS is the most commonly used digital file format in astronomy. The FITS standard was designed specifically for astronomical data and includes provisions such as describing photometric and spatial calibration information, together with image origin metadata.
+
+Image metadata is stored in a human-readable ASCII header. The information in this header is designed to calculate the byte offset of some information in the subsequent data unit to support direct access to the data cells. Each FITS file consists of one or more headers containing ASCII card images (80 character fixed-length strings) that carry keyword/value pairs, interleaved between data blocks. The keyword/value pairs provide information such as size, origin, coordinates, binary data format, free-form comments, history of the data, and anything else the creator desires: while many keywords are reserved for FITS use, the standard allows arbitrary use of the rest of the namespace.
+
+The earliest and still most commonly used type of FITS data is an image header/data block. The term 'image' is somewhat loosely applied, as the format supports data arrays of arbitrary dimension—normal image data are usually 2-D or 3-D, with the third dimension representing for example time or the color plane. The data themselves may be in one of several integer and floating-point formats, specified in the header.
+
+FITS image headers can contain information about one or more scientific coordinate systems that are overlaid on the image itself. Images contain an implicit Cartesian coordinate system that describes the location of each pixel in the image, but scientific uses usually require working in 'world' coordinates, for example the celestial coordinate system. As FITS has been generalized from its original form, the world coordinate system (WCS) specifications have become more and more sophisticated: early FITS images allowed a simple scaling factor to represent the size of the pixels; but recent versions of the standard permit multiple nonlinear coordinate systems, representing arbitrary distortions of the image. The WCS standard includes many different spherical projections, including, for example, the HEALPix spherical projection widely used in observing the cosmic microwave background radiation.[5]
+
+FITS also supports tabular data with named columns and multidimensional rows. Both binary and ASCII table formats have been specified. The data in each column of the table can be in a different format from the others. Together with the ability to string multiple header/data blocks together, this allows FITS files to represent entire relational databases.
+
+7. Adoption of FITS (https://en.wikipedia.org/wiki/FITS)
+
+FITS support is available in a variety of programming languages that are used for scientific work, including C, C++, C#, Fortran, IGOR Pro, IDL, Java, Julia, LabVIEW, Mathematica, MATLAB, Perl, Perl Data Language (PDL), Python, R, and Tcl. The FITS Support Office at NASA/GSFC maintains a list of libraries and platforms that currently support FITS.
+
+Image processing programs such as ImageJ, GIMP, Photoshop, Chasys Draw IES, XnView and IrfanView can generally read simple FITS images, but frequently cannot interpret more complex tables and databases. Scientific teams frequently write their own code to interact with their FITS data, using the tools available in their language of choice. The FITS Liberator software is used by imaging scientists at the European Space Agency, the European Southern Observatory and NASA. The SAOImage DS9 Astronomical Data Visualization Application is available for many OSs, and handles images and headers.
+
+Many scientific computing environments make use of the coordinate system data in the FITS header to display, compare, rectify, or otherwise manipulate FITS images. Examples are the coordinate transform library included with PDL, the PLOT MAP library in the Solarsoft solar-physics-related software tree, the Starlink Project AST library in C, and the PyFITS package in Python, now merged into the Astropy library.
